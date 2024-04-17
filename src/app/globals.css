@@ -4,5 +4,12 @@
 
 body {
   color: black;
+  font-size: 14px;
   background: white;
+}
+
+.card-hover:hover {
+  cursor: pointer;
+  scale: 1.025;
+  transition: 0.2s;
 }

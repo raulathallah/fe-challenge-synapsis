@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import postReducer from "@/slice/post";
+import userReducer from "@/slice/user";
+import commentReducer from "@/slice/comment";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       post: postReducer,
+      user: userReducer,
+      comment: commentReducer,
     },
   });
 };

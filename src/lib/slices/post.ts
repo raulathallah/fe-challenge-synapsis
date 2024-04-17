@@ -1,27 +1,38 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import postService from "../services/post";
 
-type PostState = {
-  id: number;
-  user_id: number;
-  title: string;
-  body: string;
-};
 type InitialState = {
-  data: PostState[];
+  data: PostType[];
+  detail: PostType | null;
 };
 const initialState = {
   data: [],
+  detail: null,
 } as InitialState;
 
-export const getPosts = createAsyncThunk("POST_LIST", async (_, thunkAPI) => {
-  try {
-    const data = await postService.getPosts();
-    return data;
-  } catch (error) {
-    throw new Error("ERROR POST SLICE");
+export const getPosts = createAsyncThunk(
+  "GET_POST_LIST",
+  async ({ page, per_page }: { page: number; per_page: number }, thunkAPI) => {
+    try {
+      const data = await postService.getPosts({ page, per_page });
+      return data;
+    } catch (error) {
+      throw new Error("ERROR GET POST LIST");
+    }
   }
-});
+);
+
+export const getPostDetails = createAsyncThunk(
+  "GET_POST_DETAIL",
+  async (id: number, thunkAPI) => {
+    try {
+      const data = await postService.getPostDetails(id);
+      return data;
+    } catch (error) {
+      throw new Error("ERROR GET POST DETAILS");
+    }
+  }
+);
 
 export const postSlice = createSlice({
   name: "post",
@@ -36,6 +47,15 @@ export const postSlice = createSlice({
     });
     builder.addCase(getPosts.rejected, (state, action) => {
       state.data = [];
+    });
+    builder.addCase(getPostDetails.fulfilled, (state, action) => {
+      state.detail = action.payload;
+    });
+    builder.addCase(getPostDetails.pending, (state, action) => {
+      state.detail = null;
+    });
+    builder.addCase(getPostDetails.rejected, (state, action) => {
+      state.detail = null;
     });
   },
 });

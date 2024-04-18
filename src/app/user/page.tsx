@@ -41,14 +41,16 @@ export default function User() {
         </Link>
       </div>
 
-      <div>
-        <div className="w-full grid lg:grid-cols-6 grid-cols-8 font-medium text-white bg-primary p-4 rounded-t-2xl">
+      <div className="shadow-lg">
+        <div className="w-full grid lg:grid-cols-6 grid-cols-8 font-medium p-4 bg-primary text-white text-lg">
           <p className="lg:col-span-5 col-span-7">User</p>
           <p className="col-span-1">Action</p>
         </div>
-        {data.map((e) => (
-          <CardUsers data={e} key={e.id} />
-        ))}
+        <div className="divide-y">
+          {data.map((e) => (
+            <CardUsers data={e} key={e.id} />
+          ))}
+        </div>
       </div>
 
       <Pagination next={onNext} prev={onPrev} page={page} />

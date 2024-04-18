@@ -4,7 +4,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 export default function CardUsers({ data }: { data: UserType }) {
   return (
     <>
-      <div className="w-full grid lg:grid-cols-6 grid-cols-8 px-6 py-2 border-gainsboro border border-opacity-50">
+      <div className="w-full grid lg:grid-cols-6 grid-cols-8 px-6 py-4 border-gainsboro duration-150 hover:bg-gainsboro hover:bg-opacity-25">
         <div className="lg:col-span-5 col-span-7">
           <Link href={"/user/" + data.id} className="space-y-2">
             <div>
@@ -17,11 +17,11 @@ export default function CardUsers({ data }: { data: UserType }) {
               } text-white px-4 py-1 rounded-xl w-fit text-xs`}
             >
               {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
-            </p>{" "}
+            </p>
           </Link>
         </div>
 
-        <div className="col-span-1 flex gap-4 items-center text-secondary w-full">
+        <div className="col-span-1 flex gap-4 text-secondary items-center w-full ">
           <FaEdit className="cursor-pointer hover:scale-125" size={20} />
           <FaTrash className="cursor-pointer hover:scale-125" size={20} />
         </div>

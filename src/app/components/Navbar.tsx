@@ -20,11 +20,11 @@ export default function Navbar() {
   ];
   return (
     <>
-      <ul className="gap-2 flex w-full justify-center border-gainsboro border-b bg-white h-full p-4 font-semibold text-secondary mb-4">
+      <ul className="gap-2 flex w-full justify-center border-gainsboro border-b bg-white h-full p-4 font-semibold text-secondary mb-4 ">
         {NavbarItem.map((item) => (
           <Link href={item.link} key={item.text}>
             <li
-              className={`px-4 py-2 mb-1 hover:bg-secondary hover:text-white cursor-pointer ${
+              className={`px-4 py-2 mb-1 hover:bg-secondary hover:text-white cursor-pointer duration-150 ${
                 pathname.includes(item.link) && "border-b-2 border-secondary"
               }`}
             >

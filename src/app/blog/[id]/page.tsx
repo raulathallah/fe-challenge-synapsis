@@ -30,7 +30,7 @@ export default function BlogDetails() {
   return (
     <div className="grid lg:grid-cols-6 gap-6">
       {!loadingPD ? (
-        <div className="lg:col-span-5 space-y-2">
+        <div className="lg:col-span-5 space-y-2 shadow-lg p-6">
           <p className="font-bold text-xl">{postDetails?.title}</p>
           <p>{postDetails?.body}</p>
         </div>

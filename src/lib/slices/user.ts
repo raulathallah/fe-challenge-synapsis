@@ -4,10 +4,12 @@ import userService from "../services/user";
 type InitialState = {
   data: UserType[];
   detail: UserType | null;
+  loading: boolean;
 };
 const initialState = {
   data: [],
   detail: null,
+  loading: false,
 } as InitialState;
 
 export const getUsers = createAsyncThunk(
@@ -40,21 +42,27 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.loading = false;
     });
     builder.addCase(getUsers.pending, (state, action) => {
       state.data = [];
+      state.loading = true;
     });
     builder.addCase(getUsers.rejected, (state, action) => {
       state.data = [];
+      state.loading = false;
     });
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
       state.detail = action.payload;
+      state.loading = false;
     });
     builder.addCase(getUserDetails.pending, (state, action) => {
       state.detail = null;
+      state.loading = true;
     });
     builder.addCase(getUserDetails.rejected, (state, action) => {
       state.detail = null;
+      state.loading = false;
     });
   },
 });

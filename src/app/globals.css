@@ -8,6 +8,11 @@ body {
   background: white;
 }
 
+th,
+td {
+  padding: 12px 36px;
+}
+
 .card-hover:hover {
   cursor: pointer;
   scale: 1.025;

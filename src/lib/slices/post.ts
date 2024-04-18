@@ -4,10 +4,12 @@ import postService from "../services/post";
 type InitialState = {
   data: PostType[];
   detail: PostType | null;
+  loading: boolean;
 };
 const initialState = {
   data: [],
   detail: null,
+  loading: false,
 } as InitialState;
 
 export const getPosts = createAsyncThunk(
@@ -41,21 +43,27 @@ export const postSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getPosts.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.loading = false;
     });
     builder.addCase(getPosts.pending, (state, action) => {
       state.data = [];
+      state.loading = true;
     });
     builder.addCase(getPosts.rejected, (state, action) => {
       state.data = [];
+      state.loading = false;
     });
     builder.addCase(getPostDetails.fulfilled, (state, action) => {
       state.detail = action.payload;
+      state.loading = false;
     });
     builder.addCase(getPostDetails.pending, (state, action) => {
       state.detail = null;
+      state.loading = true;
     });
     builder.addCase(getPostDetails.rejected, (state, action) => {
       state.detail = null;
+      state.loading = false;
     });
   },
 });

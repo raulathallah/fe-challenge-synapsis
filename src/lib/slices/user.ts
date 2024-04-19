@@ -1,15 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "../services/user";
+import axios from "axios";
 
 type InitialState = {
   data: UserType[];
   detail: UserType | null;
   loading: boolean;
+  response: any;
+  status: any;
+  message: string;
 };
 const initialState = {
   data: [],
   detail: null,
   loading: false,
+  message: "",
+  status: null,
+  response: null,
 } as InitialState;
 
 export const getUsers = createAsyncThunk(
@@ -34,11 +41,50 @@ export const getUserDetails = createAsyncThunk(
     }
   }
 );
+export const createUser = createAsyncThunk(
+  "CREATE_USER",
+  async ({ body }: { body: CreateUserType }, thunkAPI) => {
+    try {
+      const data = await userService.createUser({ body });
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          return error.response;
+        }
+      }
+      throw new Error("ERROR CREATE USER");
+    }
+  }
+);
+export const updateUser = createAsyncThunk(
+  "UPDATE_USER",
+  async ({ body, id }: { body: CreateUserType; id: string }, thunkAPI) => {
+    try {
+      const data = await userService.updateUser({ body, id });
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          return {
+            response: error.response,
+            status: error.response.status,
+          };
+        }
+      }
+      throw new Error("ERROR UPDATE USER");
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    resetResponse: (state) => {
+      state.response = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.data = action.payload;
@@ -64,7 +110,32 @@ export const userSlice = createSlice({
       state.detail = null;
       state.loading = false;
     });
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      state.response = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(createUser.pending, (state, action) => {
+      state.response = null;
+      state.loading = true;
+    });
+    builder.addCase(createUser.rejected, (state, action) => {
+      state.response = null;
+      state.loading = false;
+    });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.response = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(updateUser.pending, (state, action) => {
+      state.response = action.payload;
+      state.loading = true;
+    });
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.response = action.payload;
+      state.loading = false;
+    });
   },
 });
 
+export const { resetResponse } = userSlice.actions;
 export default userSlice.reducer;

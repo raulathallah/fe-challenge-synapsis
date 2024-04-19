@@ -54,7 +54,7 @@ export default function UserDetails() {
                 </div>
               </div>
               <div>
-                <Link href={`/user/cu/${detail.id}`}>
+                <Link href={`/user/update/${detail.id}`}>
                   <ButtonCustom onClick={onEdit}>Edit User</ButtonCustom>
                 </Link>
               </div>

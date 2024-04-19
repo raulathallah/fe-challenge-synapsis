@@ -16,6 +16,6 @@ td {
 input,
 select {
   width: 100%;
+  padding: 2px 6px;
   border: 1px solid gainsboro;
-  padding: 4px;
 }

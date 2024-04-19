@@ -12,6 +12,7 @@ import ButtonCustom from "../../components/Button";
 import Link from "next/link";
 import Pagination from "../../components/Pagination";
 import CardCustom from "@/components/CardCustom";
+import { FaSearch } from "react-icons/fa";
 
 export default function User() {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,20 +37,26 @@ export default function User() {
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
-        <input className="border px-4" placeholder="search..."></input>
-        <Link href={"/user/cu/add"}>
+        <Link href={"/user/create-update/add"}>
           <ButtonCustom>Add User</ButtonCustom>
         </Link>
       </div>
 
       <CardCustom type="display">
-        <div className="w-full grid lg:grid-cols-6 grid-cols-8 font-medium p-4 bg-primary text-white text-lg">
-          <p className="lg:col-span-5 col-span-7">User</p>
-          <p className="col-span-1">Action</p>
+        <div className="space-y-2">
+          <div className="flex gap-2 items-center w-1/5">
+            <input placeholder="search..."></input>
+            <FaSearch size={20} />
+          </div>
+
+          <div className="w-full grid lg:grid-cols-6 grid-cols-8 font-medium p-4 bg-primary text-white text-lg">
+            <p className="lg:col-span-5 col-span-7">User</p>
+            <p className="col-span-1">Action</p>
+          </div>
+          {data.map((e) => (
+            <CardUsers data={e} key={e.id} />
+          ))}
         </div>
-        {data.map((e) => (
-          <CardUsers data={e} key={e.id} />
-        ))}
       </CardCustom>
 
       <Pagination next={onNext} prev={onPrev} page={page} />

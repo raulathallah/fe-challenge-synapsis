@@ -6,12 +6,12 @@ export default function BackButton() {
   const router = useRouter();
 
   return (
-    <a
-      className="flex items-center gap-2 cursor-pointer hover:text-secondary"
+    <div
+      className="flex items-center gap-2 cursor-pointer hover:text-primary"
       onClick={router.back}
     >
       <CiCircleChevLeft size={24} />
       <p className="text-sm">Back</p>
-    </a>
+    </div>
   );
 }

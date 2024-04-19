@@ -1,4 +1,5 @@
 "use client";
+import BackButton from "@/components/BackButton";
 import { usePathname } from "next/navigation";
 
 export default function CuLayout({
@@ -12,6 +13,7 @@ export default function CuLayout({
       <p className="font-bold">
         {pathname.includes("add") ? "Add User" : "Update User"}
       </p>
+      <BackButton />
       {children}
     </div>
   );

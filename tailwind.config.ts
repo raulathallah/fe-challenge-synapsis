@@ -18,7 +18,7 @@ const config: Config = {
         black: "#222",
         white: "#fff",
         gainsboro: "#DCDCDC",
-        red: "#ff2c2c",
+        red: "#ff6961",
         green: "#6FC276",
       },
     },

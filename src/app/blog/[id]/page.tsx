@@ -17,19 +17,21 @@ export default function BlogDetails() {
   const { detail: postDetails, loading: loadingPD } =
     useSelector(getPostsSelector);
   const { detail: userDetails } = useSelector(getUsersSelector);
+
   useEffect(() => {
     if (params.id) {
-      dispatch(getPostDetails(parseInt(params.id.toString())));
+      const get = dispatch(getPostDetails(parseInt(params.id.toString())));
+      return () => get.abort();
     }
   }, [params.id]);
 
   useEffect(() => {
     if (postDetails) {
-      dispatch(getUserDetails(postDetails.user_id));
+      const get = dispatch(getUserDetails(postDetails.user_id));
+      return () => get.abort();
     }
   }, [postDetails]);
 
-  console.log(userDetails);
   return (
     <div className="grid grid-cols-8 gap-6">
       <div className="col-span-6">
@@ -42,23 +44,21 @@ export default function BlogDetails() {
           <Loading />
         )}
       </div>
-
       <div className="col-span-2 lg:border-l lg:px-4 border-gainsboro flex flex-col gap-4">
         <p className="font-bold">Posted by</p>
-        {userDetails ? (
+        {!userDetails ? (
+          <p className="text-sm">Deleted User</p>
+        ) : (
           <Link
             href={"/user/" + userDetails?.id}
             className="space-y-2 hover:text-primary"
           >
             <FaUserCircle size={24} />
-
             <div className="text-xs">
               <p className="font-bold">{userDetails?.name}</p>
               <p>{userDetails?.email}</p>
             </div>
           </Link>
-        ) : (
-          <p className="text-sm">Deleted User</p>
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import BackButton from "@/app/components/BackButton";
+import BackButton from "@/components/BackButton";
 export default function UserLayout({
   children,
 }: Readonly<{
@@ -6,6 +6,7 @@ export default function UserLayout({
 }>) {
   return (
     <div className="space-y-6">
+      <p className="font-bold">User Details</p>
       <BackButton />
       {children}
     </div>

@@ -1,10 +1,11 @@
 "use client";
-import CardComments from "@/app/components/CardComments";
+import CommentCustom from "@/components/CommentCustom";
 import { getCommentsSelector } from "@/lib/selectors/selectors";
 import { getCommentsByPostId } from "@/lib/slices/comment";
 import { AppDispatch } from "@/lib/store";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
+import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 export default function Comments() {
   const params = useParams();
@@ -15,11 +16,14 @@ export default function Comments() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {data.length ? (
-        data.map((e) => {
-          return <CardComments data={e} key={e.id} />;
-        })
+        <>
+          <p className="text-xs">Showing {data.length} comment</p>
+          {data.map((e) => (
+            <CommentCustom key={e.id} data={e} />
+          ))}
+        </>
       ) : (
         <p className="text-xs">No Comments.</p>
       )}

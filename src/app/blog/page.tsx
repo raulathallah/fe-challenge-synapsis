@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPostsSelector } from "@/lib/selectors/selectors";
 import { useEffect, useState } from "react";
 import { getPosts } from "@/lib/slices/post";
-import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
-import CardPosts from "../components/CardPosts";
-import Loading from "../components/Loading";
-import Pagination from "../components/Pagination";
+import Loading from "../../components/Loading";
+import Pagination from "../../components/Pagination";
+import CardCustom from "@/components/CardCustom";
+import Link from "next/link";
 
 export default function Blog() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +33,13 @@ export default function Blog() {
     <div className=" max-h-screen">
       <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
         {data.map((e) => (
-          <CardPosts data={e} key={e.id} />
+          <Link href={"/blog/" + e.id} key={e.id}>
+            <CardCustom>
+              <p className="text-xs opacity-50">{e.id}</p>
+              <p className="font-bold text-lg">{e.title}</p>
+              <p className="text-xs truncate">{e.body}</p>
+            </CardCustom>
+          </Link>
         ))}
       </div>
       <Pagination next={onNext} prev={onPrev} page={page} />

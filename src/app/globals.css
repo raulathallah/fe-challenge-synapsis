@@ -12,3 +12,10 @@ th,
 td {
   padding: 12px 36px;
 }
+
+input,
+select {
+  width: 100%;
+  border: 1px solid gainsboro;
+  padding: 4px;
+}

@@ -1,4 +1,4 @@
-import BackButton from "@/app/components/BackButton";
+import BackButton from "@/components/BackButton";
 
 export default function BlogDetailsLayout({
   children,
@@ -9,6 +9,8 @@ export default function BlogDetailsLayout({
 }>) {
   return (
     <div className="space-y-6">
+      <p className="font-bold">Blog Details</p>
+
       <BackButton />
       {children}
       {comments}

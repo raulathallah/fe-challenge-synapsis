@@ -1,4 +1,4 @@
-import Loading from "@/app/components/Loading";
+import Loading from "@/components/Loading";
 import { Suspense } from "react";
 
 export default function CommentsLayout({

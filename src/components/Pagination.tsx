@@ -15,16 +15,16 @@ export default function Pagination({
         onClick={prev}
         className={`${
           page === 1 && "opacity-0"
-        } hover:text-secondary duration-150`}
+        } hover:text-primary duration-150`}
         disabled={page === 1}
       >
         <CiCircleChevLeft size={28} />
       </button>
-      <p className="bg-secondary text-white px-4 py-2 font-bold rounded-xl duration-150">
+      <p className="bg-primary text-white px-4 py-2 font-bold rounded-xl duration-150">
         {page}
       </p>
 
-      <button onClick={next} className="hover:text-secondary">
+      <button onClick={next} className="hover:text-primary">
         <CiCircleChevRight size={28} />
       </button>
     </div>

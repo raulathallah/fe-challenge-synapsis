@@ -155,7 +155,7 @@ export default function User() {
               <CardUsers data={e} />
               <div className="flex gap-4 text-black items-center w-full justify-center">
                 <Link
-                  href={"/user/" + e.id}
+                  href={"/user/update/" + e.id}
                   className="flex gap-2 items-center cursor-pointer hover:scale-105 hover:text-primary"
                 >
                   <FaEdit size={20} />

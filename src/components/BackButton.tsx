@@ -7,7 +7,7 @@ export default function BackButton() {
 
   return (
     <div
-      className="flex items-center gap-2 cursor-pointer hover:text-primary"
+      className="flex items-center gap-2 cursor-pointer hover:text-primary w-fit"
       onClick={router.back}
     >
       <CiCircleChevLeft size={24} />

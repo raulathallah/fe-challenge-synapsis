@@ -30,7 +30,7 @@ export default function Blog() {
   }
 
   return (
-    <div className=" max-h-screen">
+    <div className="max-h-screen">
       <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
         {data.map((e) => (
           <Link href={"/blog/" + e.id} key={e.id}>

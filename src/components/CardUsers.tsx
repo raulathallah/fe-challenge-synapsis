@@ -5,9 +5,12 @@ import CardCustom from "./CardCustom";
 export default function CardUsers({ data }: { data: UserType }) {
   return (
     <CardCustom>
-      <div className="w-full grid lg:grid-cols-6 grid-cols-8 border-gainsboro">
-        <div className="lg:col-span-5 col-span-7 space-y-2">
-          <Link href={"/user/" + data.id} className="space-y-2">
+      <div className="w-full grid lg:grid-cols-2 gap-4 text-center border-gainsboro">
+        <div className="space-y-2 text-center lg:text-left">
+          <Link
+            href={"/user/" + data.id}
+            className="space-y-2 grid justify-center lg:justify-start"
+          >
             <div>
               <p className="font-bold text-lg">{data.name}</p>
               <p className="">{data.email}</p>
@@ -15,18 +18,26 @@ export default function CardUsers({ data }: { data: UserType }) {
             <p
               className={`${
                 data.status !== "active" ? "bg-red" : "bg-green"
-              } text-white px-4 py-1 rounded-xl w-fit text-xs`}
+              } text-white px-4 py-1 rounded-xl w-fit text-xs place-self-center lg:place-self-start`}
             >
               {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
             </p>
           </Link>
         </div>
-        <div className="col-span-1 flex gap-4 text-black items-center w-full ">
-          <Link href={"#"}>
-            <FaEdit className="cursor-pointer hover:scale-125" size={20} />
+        <div className="flex gap-4 text-black items-center w-full justify-center">
+          <Link
+            href={"#"}
+            className="flex gap-2 items-center cursor-pointer hover:scale-105 hover:text-primary"
+          >
+            <FaEdit size={20} />
+            <p>Edit</p>
           </Link>
-          <Link href={"#"}>
-            <FaTrash className="cursor-pointer hover:scale-125" size={20} />
+          <Link
+            href={"#"}
+            className="flex gap-2 items-center cursor-pointer hover:scale-105 hover:text-red"
+          >
+            <FaTrash size={20} />
+            <p>Delete</p>
           </Link>
         </div>
       </div>

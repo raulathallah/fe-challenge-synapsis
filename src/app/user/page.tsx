@@ -44,14 +44,13 @@ export default function User() {
 
       <CardCustom type="display">
         <div className="space-y-2">
-          <div className="flex gap-2 items-center w-1/5">
+          <div className="flex gap-2 items-center">
             <input placeholder="search..."></input>
             <FaSearch size={20} />
           </div>
 
-          <div className="w-full grid lg:grid-cols-6 grid-cols-8 font-medium p-4 bg-primary text-white text-lg">
-            <p className="lg:col-span-5 col-span-7">User</p>
-            <p className="col-span-1">Action</p>
+          <div className="w-full font-medium p-4 bg-primary text-white">
+            <p className="text-center lg:text-left">User</p>
           </div>
           {data.map((e) => (
             <CardUsers data={e} key={e.id} />

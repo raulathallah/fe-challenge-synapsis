@@ -34,7 +34,7 @@ export default function CuUsers() {
   }, [response]);
   useEffect(() => {
     if (code !== 0) {
-      if (code !== 201) {
+      if (code !== 201 && code !== 200) {
         setShowError(true);
       } else {
         alert("Success!");
@@ -43,7 +43,6 @@ export default function CuUsers() {
         }, 1000);
       }
     }
-    //dispatch(resetResponse());
     setCode(0);
   }, [code]);
   useEffect(() => {
@@ -101,7 +100,7 @@ export default function CuUsers() {
   };
 
   return (
-    <div className="w-1/2 space-y-2">
+    <div className="space-y-2">
       {showError && (
         <div className="bg-red text-white py-2 px-6">
           <ul className="list-disc space-y-2">
@@ -115,8 +114,10 @@ export default function CuUsers() {
       <CardCustom type="display">
         <div className="space-y-6">
           <div className="grid gap-4">
-            <FaUserCircle size={56} />
-            <div className="gap-4 grid grid-cols-2">
+            <div className="w-full flex justify-center lg:justify-start">
+              <FaUserCircle size={72} />
+            </div>
+            <div className="gap-4 grid lg:grid-cols-2">
               <div className="space-y-2">
                 <LabelCustom>Name</LabelCustom>
                 <input className="" value={name} onChange={onChangeName} />
@@ -154,7 +155,7 @@ export default function CuUsers() {
             </div>
           </div>
 
-          <div className="flex gap-2 justify-end">
+          <div className="flex gap-2 lg:justify-end justify-center">
             <ButtonCustom type="danger" onClick={onCancel}>
               Cancel
             </ButtonCustom>

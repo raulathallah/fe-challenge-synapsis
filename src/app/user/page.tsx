@@ -106,6 +106,10 @@ export default function User() {
     setSearch(e.target.value);
   };
 
+  const onAddUser = () => {
+    router.push("/user/create-update/add");
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -113,9 +117,7 @@ export default function User() {
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
-        <Link href={"/user/create-update/add"}>
-          <ButtonCustom>Add User</ButtonCustom>
-        </Link>
+        <ButtonCustom onClick={onAddUser}>Add User</ButtonCustom>
       </div>
       {showError && (
         <div className="bg-red text-white py-2 px-6">
@@ -146,7 +148,10 @@ export default function User() {
             <p className="text-center lg:text-left">User</p>
           </div>
           {userArray.map((e) => (
-            <div className="border-gainsboro border p-6 flex" key={e.id}>
+            <div
+              className="border-gainsboro border p-6 flex hover:border-primary duration-150 hover:-translate-y-0.5 hover:shadow-lg"
+              key={e.id}
+            >
               <CardUsers data={e} />
               <div className="flex gap-4 text-black items-center w-full justify-center">
                 <Link

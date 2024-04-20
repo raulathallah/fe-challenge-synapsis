@@ -14,7 +14,7 @@ export default function ButtonCustom({
   return (
     <button
       onClick={onClick}
-      className={`px-6 py-2 w-fit border bg-primary text-white hover:scale-105  font-bold duration-150 active:scale-95" ${typeStyle} ${className}`}
+      className={`px-6 py-2 w-fit border bg-primary text-white hover:-translate-y-0.5 hover:shadow-lg font-bold duration-150 ${typeStyle} ${className}`}
     >
       {children}
     </button>

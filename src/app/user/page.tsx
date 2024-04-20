@@ -4,7 +4,7 @@ import { getUsersSelector } from "@/lib/selectors/selectors";
 import { getPosts } from "@/lib/slices/post";
 import { deleteUser, getUsers } from "@/lib/slices/user";
 import { AppDispatch } from "@/lib/store";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, ChangeEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 import CardUsers from "../../components/CardUsers";
@@ -30,6 +30,9 @@ export default function User() {
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [search, setSearch] = useState("");
+  const [userArray, setUserArray] = useState<UserType[]>([]);
+
   useEffect(() => {
     if (response) {
       setCode(response.status);
@@ -65,6 +68,26 @@ export default function User() {
     dispatch(getUsers({ page, per_page: perPage }));
   }, [page]);
 
+  useEffect(() => {
+    if (data) {
+      setUserArray(data);
+      setSearch("");
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      if (!search) {
+        setUserArray(data);
+      } else {
+        const filter = userArray.filter(
+          (e) => e.name.includes(search) || e.email.includes(search)
+        );
+        setUserArray(filter);
+      }
+    }
+  }, [data, search]);
+
   const onDelete = (id: number) => {
     setUserId(id);
     setShowConfirmation(true);
@@ -75,9 +98,12 @@ export default function User() {
   };
 
   const submitDelete = () => {
-    //API HERE
     dispatch(deleteUser(userId));
     setShowConfirmation(false);
+  };
+
+  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
   };
 
   if (loading) {
@@ -108,14 +134,18 @@ export default function User() {
       <CardCustom type="display">
         <div className="space-y-2">
           <div className="flex gap-2 items-center">
-            <input placeholder="search..."></input>
+            <input
+              placeholder="Search on this page..."
+              value={search}
+              onChange={onSearch}
+            />
             <FaSearch size={20} />
           </div>
 
           <div className="w-full font-medium p-4 bg-primary text-white">
             <p className="text-center lg:text-left">User</p>
           </div>
-          {data.map((e) => (
+          {userArray.map((e) => (
             <div className="border-gainsboro border p-6 flex" key={e.id}>
               <CardUsers data={e} />
               <div className="flex gap-4 text-black items-center w-full justify-center">

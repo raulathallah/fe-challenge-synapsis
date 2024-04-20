@@ -21,7 +21,7 @@ const createUser = async ({ body }: { body: CreateUserType }) => {
   const response = await axios.post(process.env.url + `/users`, body, {
     headers: { Authorization: `Bearer ${process.env.token}` },
   });
-  return response.data;
+  return { data: response.data, status: response.status };
 };
 const updateUser = async ({
   body,
@@ -34,7 +34,7 @@ const updateUser = async ({
     headers: { Authorization: `Bearer ${process.env.token}` },
   });
 
-  return { data: response.data, code: response.status };
+  return { data: response.data, status: response.status };
 };
 
 const userService = {

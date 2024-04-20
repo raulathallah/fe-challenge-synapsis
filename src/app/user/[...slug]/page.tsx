@@ -20,29 +20,32 @@ export default function CuUsers() {
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState("");
   const [code, setCode] = useState(0);
-
+  const [errorMessage, setErrorMessage] = useState<string[]>([]);
+  const [showError, setShowError] = useState(false);
   useEffect(() => {
     if (response) {
-      if (response.code === 200) {
-        setCode(response.code);
+      setCode(response.status);
+      if (response.response) {
+        response.response.data.map((e: any) =>
+          setErrorMessage((current) => [...current, `${e.field}: ${e.message}`])
+        );
       }
     }
-    dispatch(resetResponse());
   }, [response]);
-
   useEffect(() => {
-    if (code) {
-      if (code === 200) {
+    if (code !== 0) {
+      if (code !== 201) {
+        setShowError(true);
+      } else {
         alert("Success!");
         setTimeout(() => {
           router.push("/user");
         }, 1000);
-      } else {
-        alert("Error!");
       }
     }
+    //dispatch(resetResponse());
+    setCode(0);
   }, [code]);
-
   useEffect(() => {
     if (params.slug[0] === "update" && detail) {
       setName(detail.name);
@@ -52,7 +55,20 @@ export default function CuUsers() {
     }
   }, [detail, params]);
 
-  console.log(response);
+  useEffect(() => {
+    if (showError) {
+      console.log(errorMessage);
+      setTimeout(() => {
+        setShowError(false);
+        onCloseMessage();
+      }, 5000);
+    }
+  }, [showError]);
+
+  const onCloseMessage = () => {
+    setErrorMessage([]);
+    setShowError(false);
+  };
   const onSubmit = () => {
     const body: CreateUserType = {
       name,
@@ -65,6 +81,10 @@ export default function CuUsers() {
     } else {
       dispatch(createUser({ body }));
     }
+  };
+
+  const onCancel = () => {
+    router.back();
   };
 
   const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +101,17 @@ export default function CuUsers() {
   };
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 space-y-2">
+      {showError && (
+        <div className="bg-red text-white py-2 px-6">
+          <ul className="list-disc space-y-2">
+            {errorMessage.map((e) => (
+              <li key={e}>{e}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <CardCustom type="display">
         <div className="space-y-6">
           <div className="grid gap-4">
@@ -98,11 +128,15 @@ export default function CuUsers() {
                   value={email}
                   type="email"
                   onChange={onChangeEmail}
+                  placeholder="name@example.com"
                 />
               </div>
               <div className="space-y-2">
                 <LabelCustom>Gender</LabelCustom>
                 <select className="" value={gender} onChange={onChangeGender}>
+                  <option value="" disabled>
+                    --Select Gender--
+                  </option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
@@ -121,7 +155,9 @@ export default function CuUsers() {
           </div>
 
           <div className="flex gap-2 justify-end">
-            <ButtonCustom type="danger">Cancel</ButtonCustom>
+            <ButtonCustom type="danger" onClick={onCancel}>
+              Cancel
+            </ButtonCustom>
             <ButtonCustom type="" onClick={onSubmit}>
               Save
             </ButtonCustom>

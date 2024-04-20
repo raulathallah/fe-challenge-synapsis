@@ -50,7 +50,10 @@ export const createUser = createAsyncThunk(
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          return error.response;
+          return {
+            response: error.response,
+            status: error.response.status,
+          };
         }
       }
       throw new Error("ERROR CREATE USER");

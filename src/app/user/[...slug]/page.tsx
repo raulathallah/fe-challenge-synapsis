@@ -1,9 +1,15 @@
 "use client";
 import ButtonCustom from "@/components/Button";
 import CardCustom from "@/components/CardCustom";
+import Confirmation from "@/components/Confirmation";
 import LabelCustom from "@/components/Label";
 import { getUsersSelector } from "@/lib/selectors/selectors";
-import { createUser, resetResponse, updateUser } from "@/lib/slices/user";
+import {
+  createUser,
+  getUserDetails,
+  resetResponse,
+  updateUser,
+} from "@/lib/slices/user";
 import { AppDispatch } from "@/lib/store";
 import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -22,6 +28,11 @@ export default function CuUsers() {
   const [code, setCode] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUserDetails(parseInt(params.slug[1].toString())));
+  }, []);
   useEffect(() => {
     if (response) {
       setCode(response.status);
@@ -37,10 +48,11 @@ export default function CuUsers() {
       if (code !== 201 && code !== 200) {
         setShowError(true);
       } else {
-        alert("Success!");
+        setShowSuccess(true);
         setTimeout(() => {
+          setShowSuccess(false);
           router.push("/user");
-        }, 1000);
+        }, 2000);
       }
     }
     setCode(0);
@@ -108,6 +120,14 @@ export default function CuUsers() {
               <li key={e}>{e}</li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {showSuccess && (
+        <div className="bg-green text-white py-2 px-6">
+          <p>{`Success ${
+            params.slug[0] === "update" ? "update" : "create"
+          } user!`}</p>
         </div>
       )}
 

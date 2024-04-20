@@ -36,12 +36,18 @@ const updateUser = async ({
 
   return { data: response.data, status: response.status };
 };
-
+const deleteUser = async (id: number) => {
+  const response = await axios.delete(process.env.url + `/users/${id}`, {
+    headers: { Authorization: `Bearer ${process.env.token}` },
+  });
+  return { data: response.data, status: response.status };
+};
 const userService = {
   getUsers,
   getUserDetails,
   createUser,
   updateUser,
+  deleteUser,
 };
 
 export default userService;
